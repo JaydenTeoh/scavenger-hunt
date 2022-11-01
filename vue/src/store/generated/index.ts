@@ -1,8 +1,10 @@
 // THIS FILE IS GENERATED AUTOMATICALLY. DO NOT MODIFY.
 
+import ScavengeScavenge from './scavenge.scavenge'
 
 
 export default { 
+  ScavengeScavenge: load(ScavengeScavenge, 'scavenge.scavenge'),
   
 }
 
