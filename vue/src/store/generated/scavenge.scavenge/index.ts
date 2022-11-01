@@ -128,7 +128,85 @@ export default {
 		},
 		
 		
+		async sendMsgCommitSolution({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.ScavengeScavenge.tx.sendMsgCommitSolution({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCommitSolution:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgCommitSolution:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgSubmitScavenge({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.ScavengeScavenge.tx.sendMsgSubmitScavenge({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSubmitScavenge:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgSubmitScavenge:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgRevealSolution({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.ScavengeScavenge.tx.sendMsgRevealSolution({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgRevealSolution:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgRevealSolution:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		
+		async MsgCommitSolution({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ScavengeScavenge.tx.msgCommitSolution({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCommitSolution:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCommitSolution:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgSubmitScavenge({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ScavengeScavenge.tx.msgSubmitScavenge({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSubmitScavenge:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgSubmitScavenge:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgRevealSolution({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ScavengeScavenge.tx.msgRevealSolution({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgRevealSolution:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgRevealSolution:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		
 	}
 }
