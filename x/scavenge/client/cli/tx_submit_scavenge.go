@@ -1,37 +1,46 @@
 package cli
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"strconv"
+
+	"scavenge/x/scavenge/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/spf13/cobra"
-	"scavenge/x/scavenge/types"
 )
 
 var _ = strconv.Itoa(0)
 
 func CmdSubmitScavenge() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "submit-scavenge [solution-hash] [description] [reward]",
+		Use:   "submit-scavenge [solution] [description] [reward]",
 		Short: "Broadcast message submit-scavenge",
 		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			argSolutionHash := args[0]
-			argDescription := args[1]
-			argReward := args[2]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
+			 // find a hash of the solution
+			 solutionHash := sha256.Sum256([]byte(args[0]))
+
+			 // convert the hash to string
+			 solutionHashString := hex.EncodeToString(solutionHash[:])
+			 argsDescription := string(args[1])
+			 argsReward := string(args[2])
+
+
 			msg := types.NewMsgSubmitScavenge(
 				clientCtx.GetFromAddress().String(),
-				argSolutionHash,
-				argDescription,
-				argReward,
+				solutionHashString,
+				argsDescription,
+				argsReward,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err

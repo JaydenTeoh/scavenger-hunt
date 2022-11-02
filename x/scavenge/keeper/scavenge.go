@@ -1,9 +1,10 @@
 package keeper
 
 import (
+	"scavenge/x/scavenge/types"
+
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"scavenge/x/scavenge/types"
 )
 
 // SetScavenge set a specific scavenge in the store from its index
